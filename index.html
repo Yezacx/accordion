@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>手风琴效果</title>
+    <style>
+        ul{
+            list-style: none;
+        }
+        *{
+            margin:0;
+            padding:0;
+        }
+        div{
+            width: 1150px;
+            height: 400px;
+            margin:50px auto;
+            border:1px solid red;
+            overflow: hidden;
+
+        }
+        div li {
+            width: 240px;
+            height: 400px;
+            float: left;
+        }
+        div ul {
+            width: 1300px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<script src="./js/animate.js"></script>
+<script>
+    window.onload = function () {
+        //需求：当鼠标放在哪个li上，哪个盒子变宽，其余盒子变窄，鼠标移开大盒子，恢复原样
+        //步骤： 1.给li添加背景
+        //       2.绑定onmouseover事件，当鼠标放在哪个li上，哪个盒子变宽，其余盒子变窄
+        //       3.鼠标移开大盒子，恢复原样
+        var div = document.getElementsByTagName("div")[0];
+        var ul = div.children[0];
+        var liArr = ul.children;
+        for(var i = 0;i<liArr.length;i++){
+            liArr[i].style.background = "url(images/"+ (i+1)+".jpg) no-repeat";
+            liArr[i].onmouseover = function () {
+                //排他思想
+                for(var j =0;j<liArr.length;j++){
+                    //引用框架实现宽度变窄
+                    animate(liArr[j],{"width":100});
+                }
+                //剩下他自己
+                animate(this,{"width":800});
+            }
+        }
+        div.onmouseout = function () {
+            for(var j =0;j<liArr.length;j++){
+                //引用框架实现宽度变窄
+                animate(liArr[j],{"width":240});
+            }
+        }
+    }
+</script>
+</body>
+</html>
